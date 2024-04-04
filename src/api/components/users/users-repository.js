@@ -8,6 +8,10 @@ async function getUsers() {
   return User.find({});
 }
 
+async function getUserEmail(email) {
+  return User.findOne({ email: email });
+}
+
 /**
  * Get user detail
  * @param {string} id - User ID
@@ -65,6 +69,7 @@ async function deleteUser(id) {
 module.exports = {
   getUsers,
   getUser,
+  getUserEmail,
   createUser,
   updateUser,
   deleteUser,

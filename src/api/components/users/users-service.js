@@ -85,6 +85,16 @@ async function updateUser(id, name, email) {
   return true;
 }
 
+async function userCheckEmail(email) {
+  const checkEmail = await usersRepository.getUserEmail(email);
+
+  if (!checkEmail) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 /**
  * Delete user
  * @param {string} id - User ID
@@ -110,6 +120,7 @@ async function deleteUser(id) {
 module.exports = {
   getUsers,
   getUser,
+  userCheckEmail,
   createUser,
   updateUser,
   deleteUser,
