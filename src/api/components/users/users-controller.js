@@ -133,10 +133,36 @@ async function deleteUser(request, response, next) {
   }
 }
 
+async function changePassword(request, response, next) {
+  try {
+    const id = request.params.id;
+    const oldPassword = request.body.oldPassword;
+    const newPassword = request.body.newPassword;
+    const confirmPassword = request.body.confirmPassword;
+
+    const changePass = await usersService.changePassword(
+      id,
+      oldPassword,
+      newPassword,
+      confirmPassword
+    );
+    if (!changePass) {
+      console.log('Cek lagi ada yang error');
+    }
+
+    return response
+      .status(200)
+      .json({ message: 'Password changed successfully' });
+  } catch (error) {
+    return next(error);
+  }
+}
+
 module.exports = {
   getUsers,
   getUser,
   createUser,
   updateUser,
   deleteUser,
+  changePassword,
 };

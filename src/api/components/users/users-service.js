@@ -1,5 +1,6 @@
 const usersRepository = require('./users-repository');
 const { hashPassword } = require('../../../utils/password');
+const { passwordMatched } = require('../../../utils/password');
 
 /**
  * Get list of users
@@ -59,6 +60,28 @@ async function createUser(name, email, password) {
   }
 
   return true;
+}
+
+async function changePassword(id, oldPassword, newPassword, confirmPassword) {
+  if (newPassword !== confirmPassword) {
+    throw new Error("New password doesn't match confirmation");
+  }
+
+  if (newPassword.length < 6 || newPassword.length > 32) {
+    throw new Error('New password must be between 6 and 32 characters');
+  }
+
+  const user = await usersRepository.getUser(id);
+
+  const isPasswordValid = await passwordMatched(oldPassword, user.password);
+  if (!isPasswordValid) {
+    throw new Error("Old password doesn't match current password");
+  }
+
+  const hashedPassword = await hashPassword(newPassword);
+
+  // Update the user's password in the database
+  await usersRepository.updatePassword(id, hashedPassword);
 }
 
 /**
@@ -123,5 +146,6 @@ module.exports = {
   userCheckEmail,
   createUser,
   updateUser,
+  changePassword,
   deleteUser,
 };

@@ -36,6 +36,10 @@ async function createUser(name, email, password) {
   });
 }
 
+async function updatePassword(id, newPassword) {
+  await User.findByIdAndUpdate(id, { password: newPassword });
+}
+
 /**
  * Update existing user
  * @param {string} id - User ID
@@ -72,5 +76,6 @@ module.exports = {
   getUserEmail,
   createUser,
   updateUser,
+  updatePassword,
   deleteUser,
 };
