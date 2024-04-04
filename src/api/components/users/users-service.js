@@ -80,7 +80,7 @@ async function changePassword(id, oldPassword, newPassword, confirmPassword) {
 
   const hashedPassword = await hashPassword(newPassword);
 
-  // Update the user's password in the database
+  // Update the user's password
   await usersRepository.updatePassword(id, hashedPassword);
 }
 
