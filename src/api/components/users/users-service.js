@@ -64,7 +64,7 @@ async function createUser(name, email, password) {
 
 async function changePassword(id, oldPassword, newPassword, confirmPassword) {
   if (newPassword !== confirmPassword) {
-    throw new Error("New password doesn't match confirmation");
+    throw new Error("New password doesn't match with the password");
   }
 
   if (newPassword.length < 6 || newPassword.length > 32) {
@@ -73,8 +73,8 @@ async function changePassword(id, oldPassword, newPassword, confirmPassword) {
 
   const user = await usersRepository.getUser(id);
 
-  const isPasswordValid = await passwordMatched(oldPassword, user.password);
-  if (!isPasswordValid) {
+  const passwordValid = await passwordMatched(oldPassword, user.password);
+  if (!passwordValid) {
     throw new Error("Old password doesn't match current password");
   }
 
