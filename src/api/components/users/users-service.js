@@ -62,6 +62,7 @@ async function createUser(name, email, password) {
   return true;
 }
 
+// Change User Password
 async function changePassword(id, oldPassword, newPassword, confirmPassword) {
   if (newPassword !== confirmPassword) {
     throw new Error("New password doesn't match with the password");
