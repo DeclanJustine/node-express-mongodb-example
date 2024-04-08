@@ -148,15 +148,12 @@ async function changePassword(request, response, next) {
     const newPassword = request.body.newPassword;
     const confirmPassword = request.body.confirmPassword;
 
-    const changePass = await usersService.changePassword(
+    await usersService.changePassword(
       id,
       oldPassword,
       newPassword,
       confirmPassword
     );
-    if (!changePass) {
-      console.log('Cek lagi ada yang error');
-    }
 
     return response
       .status(200)
